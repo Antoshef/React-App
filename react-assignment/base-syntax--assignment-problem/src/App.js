@@ -6,7 +6,7 @@ import UserInput from './Components/UserInput';
 import UserOutput from './Components/UserOutput';
 
 class App extends Component {
-  state= {
+  state = {
     users:
           [
             {name: "Anton", day: "Sunday"},
@@ -14,14 +14,40 @@ class App extends Component {
             {name: "Kolai", day: "Wednesday"}
           ]
   }
+
+  setNameHandler = (event) => {
+    this.setState ( {
+      users: 
+      [
+        {name: event.target.value, day: "Sunday"},
+        {name: "Kiro", day: "Monday"},
+        {name: "Roki", day: "Tuesday"}
+      ]
+    })
+  }
+
   render() {
+    const style = {
+      backgroundColor: 'yellow',
+      padding: '20px',
+      cursor: 'pointer'
+    }
+
     return (
       <div className="App">
-        <UserInput />
-        <UserOutput name={ this.state.users[0].name } day={ this.state.users[0].day }/>
-        <UserOutput name={ this.state.users[1].name } day={ this.state.users[1].day } />
-        <UserOutput name={ this.state.users[2].name } day={ this.state.users[2].day } />
-        <ol>
+        <UserInput 
+        change= { this.setNameHandler }/>
+        <UserOutput 
+        name={ this.state.users[0].name } 
+        day={ this.state.users[0].day }
+        click= { this.setNameHandler }  />
+        <UserOutput 
+        name={ this.state.users[1].name } 
+        day={ this.state.users[1].day } />
+        <UserOutput 
+        name={ this.state.users[2].name } 
+        day={ this.state.users[2].day } />
+        <ol style={ style }>
           <li>Create TWO new components: UserInput and UserOutput</li>
           <li>UserInput should hold an input element, UserOutput two paragraphs</li>
           <li>Output multiple UserOutput components in the App component (any paragraph texts of your choice)</li>
