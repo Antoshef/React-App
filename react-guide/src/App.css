@@ -1,9 +1,32 @@
 .App {
   text-align: center;
 }
+
 .red {
   color: red;
 }
+
 .bold {
   font-size: 22px;
+}
+
+.btn {
+  background-color: green;
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: blue;
+}
+
+.btn-red {
+  background-color: red;
+}
+
+.btn-red:hover {
+  background-color: salmon;
 }
