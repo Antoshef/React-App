@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import './App.css';
 import Person from './Person/Person';
 
@@ -26,16 +27,6 @@ class App extends Component {
       this.setState( { showPerson: !doesShow } )
     }
 
-    switchNameHandler = (newName) => {
-      this.setState( {
-        persons: [
-          { name: newName, age: "22" },
-          { name: "Panayot", age: "18" },
-          { name: "Petyr", age: "15" }
-        ]
-      });
-    }
-
     changeNameHandler = (event, key) => {
       const personIndex = this.state.persons.findIndex(p => { return p.id === key });
 
@@ -51,11 +42,15 @@ class App extends Component {
 
   render () {
     const style = {
-      backgroundColor: 'white',
+      backgroundColor: 'green',
+      color: 'white',
       font: 'inherit',
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
+      ':hover': {
+        backgroundColor: 'lightgreen'
+      }
     }
 
     let persons = null;
@@ -73,12 +68,27 @@ class App extends Component {
                     />
           })}
         </div>
+
+        style.backgroundColor = 'red';
+        style[':hover'] = {
+          backgroundColor: 'salmon',
+          color: 'black'
+        }
+    }
+
+    let classes = [];
+    
+    if (this.state.persons.length <= 2) {
+      classes.push('bold');
+    }
+    if (this.state.persons.length <= 1) {
+      classes.push('red');
     }
 
     return (
       <div className="App">
         <h1>Hi I'm a React Application</h1>
-        <h3>This is working Really!?</h3>
+        <h3 className={classes.join(' ')} >This is working Really!?</h3>
         <button 
         style={style}
         onClick={ this.togglePersonHandler }>Toggle Persons</button>
@@ -88,45 +98,4 @@ class App extends Component {
   }
 }
 
-export default App;
-
-// import React, { useState } from 'react';
-// import './App.css';
-// import Person from './Person/Person';
-
-// const app = props => {
-//     const [personState, setPersonState] = useState ({
-//       persons: [
-//         { name: "Antoshef", age: "34" },
-//         { name: "Panayot", age: "33" },
-//         { name: "Lazar", age: "26" }
-//       ],
-//     });
-
-//     const [otherState, setOtherState] = useState('other state set');
-
-//     console.log(personState, otherState);
-
-//     const switchNameHandler = () => {
-//       setPersonState( {
-//         persons: [
-//           { name: "Nikolay", age: "22" },
-//           { name: "Panayot", age: "18" },
-//           { name: "Petyr", age: "15" }
-//         ]
-//       });
-//     }
-
-//     return (
-//       <div className="App">
-//         <h1>Hi I'm a React Application</h1>
-//         <h3>This is working Really!?</h3>
-//         <button onClick={ switchNameHandler }>Switch Name</button>
-//         <Person name = {personState.persons[0].name} age = {personState.persons[0].age}/>
-//         <Person name = {personState.persons[1].name} age = {personState.persons[1].age}/>
-//         <Person name = {personState.persons[2].name} age = {personState.persons[2].age}>My Hobbies: Racing</Person>
-//       </div>
-//     );
-// }
-
-// export default app;
+export default Radium(App);
