@@ -4,7 +4,7 @@ import './App.css';
 import Person from './Person/Person';
 
 const StyledButton = styled.button`
-  background-color: green;
+  background-color: ${ props => props.alt ? 'red' : 'green' };
   color: white;
   font: inherit;
   border: 1px solid blue;
@@ -12,7 +12,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: blue;
+    background-color: ${ props => props.alt ? 'black' : 'blue' };
   }
 `;
 
