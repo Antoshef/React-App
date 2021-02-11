@@ -8,11 +8,6 @@
     
 }
 
-.Small {
-    font-size: 32px;
-    color: green;
-}
-
 @media (min-width: 500px) {
     .Person {
         width: 450px;
