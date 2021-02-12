@@ -16,7 +16,9 @@ class App extends Component {
       ],
 
       otherState: 'some other value',
-      showPerson: false
+      showPerson: false,
+      showCockpit: true,
+      changeCounter: 0
     }
   }
 
@@ -50,7 +52,12 @@ class App extends Component {
 
       persons[personIndex] = person;
 
-      this.setState( { persons: persons } ); 
+      this.setState((prevState, props) => { 
+        return {
+          persons: persons, 
+          changeCounter: prevState.changeCounter + 1
+        }
+      } ); 
     }
 
   render () {
@@ -68,11 +75,16 @@ class App extends Component {
 
     return (
       <div className="App">
+        <button onClick={() => this.setState({ showCockpit: false })}>
+          Remove Cockpit
+        </button>
+        {this.state.showCockpit ?
         <Cockpit 
           title = { this.props.appTitle }
           toggle = { this.togglePersonHandler }
           persons = { this.state.persons }
-          show = { this.state.showPerson }/>
+          show = { this.state.showPerson }/> : null
+        }
         { persons }
       </div>
     );
