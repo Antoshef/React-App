@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Person from './Person/Person';
+import PropTypes from 'prop-types';
 
 class Persons extends Component {
   // static getDerivedStateFromProps(props, state) {
@@ -7,9 +8,9 @@ class Persons extends Component {
   //   return state;
   // }
 
-  componentWillRecieveProps(props) {
-    console.log('[Persons.js] componentWillRecieveProps', props);
-  }
+  // componentWillReceiveProps(props) {
+  //   console.log('[Persons.js] componentWillRecieveProps', props);
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     console.log('[Persons.js] shouldComponentUpdate');
@@ -40,5 +41,12 @@ class Persons extends Component {
     });
   }
 };
+
+Person.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  changed: PropTypes.func,
+  clicked: PropTypes.func,
+}
 
 export default Persons;
