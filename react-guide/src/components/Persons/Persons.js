@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import Person from './Person/Person';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import Person from "./Person/Person";
+import PropTypes from "prop-types";
 
 class Persons extends Component {
   // static getDerivedStateFromProps(props, state) {
@@ -13,40 +13,40 @@ class Persons extends Component {
   // }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('[Persons.js] shouldComponentUpdate');
+    console.log("[Persons.js] shouldComponentUpdate");
     return true;
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
-    console.log('[Persons.js] getSnapshotBeforeUpdate');
+    console.log("[Persons.js] getSnapshotBeforeUpdate");
     return null;
   }
 
   componentDidUpdate() {
-    console.log('[Persons.js] componentDidUpdate');
+    console.log("[Persons.js] componentDidUpdate");
   }
 
-  render () {
-    console.log('[Persons.js] rendering...');
+  render() {
+    console.log("[Persons.js] rendering...");
     return this.props.persons.map((person, index) => {
       return (
-        <Person 
-          name = { person.name }
-          age = { person.age }
-          key = { person.id }
-          changed = {(event) => this.props.changed(event, person.id) }
-          clicked = {(index) => this.props.clicked(index) }
+        <Person
+          name={person.name}
+          age={person.age}
+          key={person.id}
+          changed={(event) => this.props.changed(event, person.id)}
+          clicked={(index) => this.props.clicked(index)}
         />
       );
     });
   }
-};
+}
 
 Person.propTypes = {
   name: PropTypes.string,
   age: PropTypes.number,
   changed: PropTypes.func,
   clicked: PropTypes.func,
-}
+};
 
 export default Persons;
