@@ -1,11 +1,9 @@
-function combine(input1: number | string, input2: number | string) {
-    let result;
-    if (typeof input1 === 'number' && typeof input2 === 'number') {
-        result = input1 + input2;
-    } else {
-        result = input1.toString() + input2.toString();
-    }
-    console.log(result);
+function add(num1: number, num2: number) {
+    return num1 + num2;
 }
 
-combine(22, 34);
+function printResult(num: number): void {
+    console.log('Result is: ' + num);
+}
+
+printResult(add(5,12))
