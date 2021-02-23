@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-
-import classes from './Posts.css';
+import './Posts.css';
 
 import Post from '../../../components/Post/Post';
 import axios from 'axios';
@@ -11,6 +10,7 @@ class Posts extends Component {
     }
 
     componentDidMount() {
+        console.log(this.props);
         axios.get('/posts')
             .then(response => {
                 const posts = response.data.slice(0, 4);
@@ -44,7 +44,7 @@ class Posts extends Component {
                 });
             };
         return(
-            <section className='Posts'>
+            <section className="Posts">
                 {posts}
             </section>
         );
