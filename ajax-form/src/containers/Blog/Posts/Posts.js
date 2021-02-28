@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './Posts.css';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 import Post from '../../../components/Post/Post';
 import axios from 'axios';
+import FullPost from '../FullPost/FullPost';
 
 class Posts extends Component {
     state = {
@@ -38,7 +39,7 @@ class Posts extends Component {
             posts = this.state.posts
                 .map(post => {
                     return (
-                        <Link to={'/' + post.id} key={post.id}>    
+                        <Link to={'/posts/' + post.id} key={post.id}>    
                             <Post 
                                 title ={post.title} 
                                 author={post.author} 
@@ -48,9 +49,12 @@ class Posts extends Component {
                 });
             };
         return(
-            <section className="Posts">
-                {posts}
-            </section>
+            <div>
+                <section className="Posts">
+                    {posts}
+                </section>
+                <Route path={this.props.match.url + '/:id'} exact component={FullPost} />
+            </div>
         );
     };
 };
