@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import ErrorModal from '../UI/ErrorModal';
 import IngredientForm from './IngredientForm';
 import IngredientList from './IngredientList';
@@ -24,7 +24,9 @@ const httpReducer = (curHttpState, action) => {
     case 'RESPONSE':
       return { ...curHttpState, loading: false }
     case 'ERROR':
-      return { loading: false, error: action.errorData }
+      return { loading: false, error: action.errorMessage }
+    case 'CLEAR':
+      return { ...curHttpState, error: null }
     default:
       throw new Error('Should not get there!');
   }
@@ -34,8 +36,8 @@ const Ingredients = () => {
   const [userIngredients, dispatch] = useReducer(ingredientReducer, [])
   const [httpState, dispatchHttp] = useReducer(httpReducer, { loading: false, error: null });
   // const [userIngredients, setUserIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState(false);
 
   const filteredIngredientsHandler = useCallback(filteredIngredients => {
     // setUserIngredients(filteredIngredients);
@@ -43,7 +45,7 @@ const Ingredients = () => {
   }, []);
 
   const addIngredientHandler = ingredient => {
-    setIsLoading(true);
+    dispatchHttp({ type: 'SEND' });
     fetch('https://books-exercise-ec332-default-rtdb.europe-west1.firebasedatabase.app/ingredients.json', {
       method: 'POST',
       body: JSON.stringify(ingredient),
@@ -52,7 +54,7 @@ const Ingredients = () => {
       return res.json();
     })
       .then(resData => {
-        setIsLoading(false);
+        dispatchHttp({ type: 'RESPONSE' });
         // setUserIngredients(prevIngredients => [
         //   ...prevIngredients,
         //   { id: resData.name, ...ingredient }
@@ -62,23 +64,23 @@ const Ingredients = () => {
   };
 
   const removeIngredientHandler = (id) => {
-    setIsLoading(true);
-    fetch(`https://books-exercise-ec332-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.json`, {
+    dispatchHttp({ type: 'SEND' });
+    fetch(`https://books-exercise-ec332-default-rtdb.europe-west1.firebasedatabase.app/ingredients/${id}.son`, {
       method: 'DELETE',
     })
       .then(res => {
-        setIsLoading(false);
+        dispatchHttp({ type: 'RESPONSE' });
         // setUserIngredients(prevIngredients => prevIngredients.filter(ig => ig.id !== id));
         dispatch({ type: 'DELETE', id: id })
       })
       .catch(error => {
-        setError('Stupid error!');
-        setIsLoading(false);
+        // setError('Stupid error!');
+        dispatchHttp({ type: 'ERROR', errorMessage: 'Something went wrong!' });
       })
   };
 
   const clearError = () => {
-    setError(false);
+    dispatchHttp({ type: 'CLEAR' });
   }
 
   useEffect(() => {
@@ -87,10 +89,10 @@ const Ingredients = () => {
 
   return (
     <div className="App">
-      {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
+      {httpState.error && <ErrorModal onClose={clearError}>{httpState.error}</ErrorModal>}
       <IngredientForm
         onAddIngredient={addIngredientHandler}
-        loading={isLoading} />
+        loading={httpState.loading} />
 
       <section>
         <Search
